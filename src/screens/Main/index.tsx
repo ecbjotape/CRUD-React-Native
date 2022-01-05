@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 
-import { Box, Button, ScrollView, Text, View } from 'native-base';
+import { Box, Button, ScrollView, Spinner, Text, View } from 'native-base';
 
 import Styles from './styles';
 
@@ -10,9 +10,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MainScreen: React.FC = () => {
   const [posts, setPosts] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(true);
+  
+  const renderSpinner = () => <Spinner animating color="#f6f" />;
 
   useEffect(() => {
     getPosts();
+    setShowSpinner(false);
   }, []);
 
   const getPosts = async () => {
@@ -63,7 +67,7 @@ const MainScreen: React.FC = () => {
         </Button>
       </View>
       <View style={Styles.contentMain}>
-        {renderListPosts()}
+      {showSpinner ? renderSpinner() : renderListPosts()}
       </View>
     </View>
   );
