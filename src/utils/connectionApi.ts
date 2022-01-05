@@ -1,9 +1,9 @@
-import {create} from 'apisauce';
+import { create } from 'apisauce';
 import Constants from './constants';
 
 const api = create({
   baseURL: Constants.BASE_URL,
-  headers: {Accept: 'application/json'},
+  headers: { Accept: 'application/json' },
 });
 
 export const setToken = (token: any) => {

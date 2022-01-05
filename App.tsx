@@ -1,25 +1,29 @@
-import React from 'react';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {NativeBaseProvider} from 'native-base';
+import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import MainRouter from './src/routers/Main';
-
+import { NativeBaseProvider } from 'native-base/';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import Store from './src/redux/store';
+import SplashScreen from 'react-native-splash-screen';
+
 Store.configure();
-export const {store, persistor} = Store;
+export const { store } = Store;
 
-class App extends React.Component<any, any> {
-  render() {
-    return (
-      <Provider store={store}>
-        <NativeBaseProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <MainRouter />
-          </PersistGate>
-        </NativeBaseProvider>
+export default function App() {
+
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
+  return (
+    <NativeBaseProvider >
+      <Provider store={Store.store}>
+        <PersistGate loading={null} persistor={Store.persistor}>
+          <StatusBar barStyle="default" />
+          <MainRouter />
+        </PersistGate>
       </Provider>
-    );
-  }
+    </NativeBaseProvider>
+  );
 }
-
-export default App;
