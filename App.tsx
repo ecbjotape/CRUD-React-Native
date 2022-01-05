@@ -11,16 +11,15 @@ Store.configure();
 export const { store } = Store;
 
 export default function App() {
-
   useEffect(() => {
     SplashScreen.hide();
   });
 
   return (
-    <NativeBaseProvider >
+    <NativeBaseProvider>
       <Provider store={Store.store}>
         <PersistGate loading={null} persistor={Store.persistor}>
-          <StatusBar barStyle="default" />
+          <StatusBar backgroundColor="#898989" />
           <MainRouter />
         </PersistGate>
       </Provider>

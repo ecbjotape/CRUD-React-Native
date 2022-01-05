@@ -1,14 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Button, Image, StatusBar, Text, View } from 'native-base';
+
+import { Box, Button, ScrollView, Text, View } from 'native-base';
 
 import Styles from './styles';
-import { ScrollView } from 'react-native-gesture-handler';
+
+import ListPostService from '../../services/ListPostService';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MainScreen: React.FC = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    const res = await ListPostService.getList();
+
+    setPosts(res);
+  }
+
+  const viewPost = async (id: string) => {
+    console.log(id);
+  }
+
+  const renderListPosts = () => (
+    <ScrollView>
+      {
+        posts.map(
+          (el: any) => (
+            <View key={el.id}>
+              <TouchableOpacity onPress={() => { viewPost(el.id) }}>
+                <Box
+                  borderTopWidth="1"
+                  borderColor="coolGray.300"
+                  style={Styles.boxCallList}
+                  p="2"
+                >
+                  <View>
+                    <Text style={Styles.titlePost}>
+                      {el.title}
+                    </Text>
+                    <Text style={Styles.textPost}>
+                      {el.body}
+                    </Text>
+                  </View>
+                </Box>
+              </TouchableOpacity>
+            </View>
+          ),
+        )}
+    </ScrollView>
+  );
+
   return (
     <View style={Styles.mainView}>
-      <StatusBar backgroundColor="#898989" />
       <View style={Styles.containerHeader}>
         <Text color="white" fontSize={20}>fumi.co</Text>
         <Button variant="link">
@@ -16,10 +63,7 @@ const MainScreen: React.FC = () => {
         </Button>
       </View>
       <View style={Styles.contentMain}>
-        <ScrollView>
-          <Text>Parece que você ainda não adicionou</Text>
-          <Button variant="link">Adicionar</Button>
-        </ScrollView>
+        {renderListPosts()}
       </View>
     </View>
   );

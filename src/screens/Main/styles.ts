@@ -11,9 +11,29 @@ export default StyleSheet.create({
   containerHeader: {
     height: '10%',
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: '#181414',
     padding: 15
+  },
+
+  boxCallList: {
+    flex: 1,
+    marginTop: 10,
+    minHeight: 75,
+  },
+
+  titlePost: {
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 5
+  },
+
+  textPost: {
+    textTransform: 'capitalize',
+    fontSize: 13,
+    textAlign: 'center'
   },
 
   contentMain: {

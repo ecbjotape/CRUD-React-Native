@@ -11,7 +11,7 @@ const constants = {
 
   /* Constantes de configuração de conexão com API */
   // BASE_URL: 'http://ec2-13-58-87-200.us-east-2.compute.amazonaws.com:3000',
-  BASE_URL: 'http://10.71.0.7:3000',
+  BASE_URL: 'https://jsonplaceholder.typicode.com',
   AUTH_TOKEN: 'authToken',
 
   /* Constantes de inicialização */
