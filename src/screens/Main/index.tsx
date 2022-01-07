@@ -6,27 +6,44 @@ import { Box, Button, ScrollView, Spinner, Text, View } from 'native-base';
 import Styles from './styles';
 
 import ListPostService from '../../services/ListPostService';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const MainScreen: React.FC = () => {
+import { useNavigation } from '@react-navigation/native';
+
+import { mainScreenNavigationProp } from '../../interfaces/ParamsList/postStack';
+import { StoreState } from '../../interfaces/redux/StoreState';
+import { Post } from '../../interfaces/redux/Post';
+
+import { connect } from 'react-redux';
+
+const mapStateToProps = (State: StoreState) => ({
+  Post: State.Post,
+})
+
+const MainScreen: React.FC = (props: any) => {
+  const { Post: { title, body, id } } = props;
+
+  const navigation = useNavigation<mainScreenNavigationProp>();
   const [posts, setPosts] = useState([]);
-  const [showSpinner, setShowSpinner] = useState(true);
-  
-  const renderSpinner = () => <Spinner animating color="#f6f" />;
+  console.log(title, body, id);
 
   useEffect(() => {
     getPosts();
-    setShowSpinner(false);
   }, []);
 
   const getPosts = async () => {
-    const res = await ListPostService.getList();
+    const res: any = await ListPostService.getList();
 
     setPosts(res);
   }
 
-  const viewPost = async (id: string) => {
-    console.log(id);
+  const viewPost = async (post: Post) => {
+    navigation.navigate('PostDetails', { post });
+  }
+
+  const createPost = async () => {
+    navigation.navigate('PostCreate');
   }
 
   const renderListPosts = () => (
@@ -35,7 +52,7 @@ const MainScreen: React.FC = () => {
         posts.map(
           (el: any) => (
             <View key={el.id}>
-              <TouchableOpacity onPress={() => { viewPost(el.id) }}>
+              <TouchableOpacity onPress={() => { viewPost(el) }}>
                 <Box
                   borderTopWidth="1"
                   borderColor="coolGray.300"
@@ -62,15 +79,14 @@ const MainScreen: React.FC = () => {
     <View style={Styles.mainView}>
       <View style={Styles.containerHeader}>
         <Text color="white" fontSize={20}>fumi.co</Text>
-        <Button variant="link">
-          Adicionar
+        <Button onPress={() => { createPost() }} variant="link">
+          Novo post
         </Button>
       </View>
       <View style={Styles.contentMain}>
-      {showSpinner ? renderSpinner() : renderListPosts()}
+        {renderListPosts()}
       </View>
     </View>
   );
 };
-
-export default MainScreen;
+export default connect(mapStateToProps, null)(MainScreen);
