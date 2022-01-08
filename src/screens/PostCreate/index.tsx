@@ -4,7 +4,7 @@ import { Text } from 'react-native';
 import { Button, Input, Spinner, TextArea, useToast, View } from 'native-base';
 import styles from './styles';
 import { connect } from 'react-redux';
-import postAction from '../../redux/actions/crud/create';
+import postAction from '../../redux/actions/getPosts';
 import { useNavigation } from '@react-navigation/native';
 import { postCreatenNavigationProp } from '../../interfaces/ParamsList/postStack';
 

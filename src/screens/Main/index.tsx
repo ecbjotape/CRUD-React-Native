@@ -5,41 +5,38 @@ import { Box, Button, ScrollView, Spinner, Text, View } from 'native-base';
 
 import Styles from './styles';
 
-import ListPostService from '../../services/ListPostService';
-
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { mainScreenNavigationProp } from '../../interfaces/ParamsList/postStack';
 import { StoreState } from '../../interfaces/redux/StoreState';
-import { Post } from '../../interfaces/redux/Post';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const mapStateToProps = (State: StoreState) => ({
-  Post: State.Post,
-})
+import postAction from '../../redux/actions/getPosts';
+
+import getList from '../../services/ListPostService';
 
 const MainScreen: React.FC = (props: any) => {
-  const { Post: { title, body, id } } = props;
+  const { State } = props;
 
   const navigation = useNavigation<mainScreenNavigationProp>();
   const [posts, setPosts] = useState([]);
-  console.log(title, body, id);
 
   useEffect(() => {
     getPosts();
   }, []);
 
   const getPosts = async () => {
-    const res: any = await ListPostService.getList();
+    const res: any = await getList();
 
-    setPosts(res);
+    setPosts(res.payload);
   }
 
-  const viewPost = async (post: Post) => {
-    navigation.navigate('PostDetails', { post });
+  const viewPost = async (id: number) => {
+    navigation.navigate('PostDetails', { id });
   }
 
   const createPost = async () => {
@@ -49,7 +46,7 @@ const MainScreen: React.FC = (props: any) => {
   const renderListPosts = () => (
     <ScrollView>
       {
-        posts.map(
+        posts?.map(
           (el: any) => (
             <View key={el.id}>
               <TouchableOpacity onPress={() => { viewPost(el) }}>
@@ -89,4 +86,14 @@ const MainScreen: React.FC = (props: any) => {
     </View>
   );
 };
-export default connect(mapStateToProps, null)(MainScreen);
+
+const mapStateToProps = (State: StoreState) => ({
+  Post: State.posts,
+  State
+});
+
+const mapDispatchToProps = (dispatch: any) => {
+  return bindActionCreators({ postAction }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

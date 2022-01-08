@@ -1,11 +1,11 @@
 import connectionApi from '../utils/connectionApi';
 
-const getList = async () => {
+export const getPostById = async (id: number) => {
     try {
-        const response = await connectionApi.get(`/posts`);
+        const response = await connectionApi.get(`/posts/${id}`);
 
         return {
-            type: 'GET_ALL_POSTS',
+            type: 'POST_BY_ID',
             payload: response.data
         };
     } catch (error) {
@@ -13,4 +13,4 @@ const getList = async () => {
     }
 
 };
-export default getList;
+export default getPostById;

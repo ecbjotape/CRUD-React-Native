@@ -1,6 +1,6 @@
 import { Post } from "./Post";
 
 export interface PostAction {
-  type: string;
+  type?: string;
   payload: Post
 }

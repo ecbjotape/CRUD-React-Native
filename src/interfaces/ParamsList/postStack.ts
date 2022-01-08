@@ -4,7 +4,7 @@ import { Post } from "../redux/Post";
 export type PostStackParamList = {
   MainScreen: undefined;
   PostCreate: undefined;
-  PostDetails: { post: Post};
+  PostDetails: { id: number};
 }
 
 export type mainScreenNavigationProp = StackNavigationProp<PostStackParamList, 'MainScreen'>;
