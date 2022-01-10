@@ -1,9 +1,9 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { TaskAction } from '../../interfaces/redux/TaskAction';
+import { Task } from '../../interfaces/redux/Task';
 
-const task = createAction<TaskAction>('getPosts');
+const task = createAction<Task>('task/add');
 
-const initialState: TaskAction = {
+const initialState = {
   Task: []
 };
 
@@ -11,7 +11,7 @@ const taskReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(task, (state, action) => ({
       ...state,
-      Task: action.payload.Task
+      Task: action.payload.Task,
     }))
 });
 

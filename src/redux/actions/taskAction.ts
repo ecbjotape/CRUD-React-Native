@@ -4,7 +4,7 @@ export default function taskAction(
   Task: []
 ): TaskAction {
   return {
-    type: 'task',
+    type: 'task/add',
     payload: {
       Task
     },

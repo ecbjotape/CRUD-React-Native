@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
 
   addWrapper: {
-    width: 80,
+    width: 90,
     height: 60,
     backgroundColor: '#189',
     borderRadius: 60,
@@ -143,6 +143,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    width: 150,
+    width: '50%',
   },
 });
