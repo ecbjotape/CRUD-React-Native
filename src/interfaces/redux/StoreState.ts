@@ -1,5 +1,5 @@
-import { PostAction } from './PostAction';
+import { Task } from './Task';
 
 export interface StoreState {
-  posts: PostAction;
+  tasks: Task;
 }

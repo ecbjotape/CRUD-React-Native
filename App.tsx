@@ -5,15 +5,11 @@ import { NativeBaseProvider } from 'native-base/';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Store from './src/redux/store';
-import SplashScreen from 'react-native-splash-screen';
 
 Store.configure();
 export const { store } = Store;
 
 export default function App() {
-  useEffect(() => {
-    SplashScreen.hide();
-  });
 
   return (
     <NativeBaseProvider>
